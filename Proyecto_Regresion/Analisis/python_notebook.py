@@ -32,3 +32,6 @@ house_price_regression['floors'].unique()
 
 #Columna 'condition'
 house_price_regression['condition'].unique()
+
+#Columna 'grade'
+house_price_regression['grade'].unique()
