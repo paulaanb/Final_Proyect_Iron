@@ -57,6 +57,8 @@ house_price_regression[house_price_regression['waterfront']==1]['price'].mean()
 #Precio promedio de las casas sin 'waterfront'
 house_price_regression[house_price_regression['waterfront']==0]['price'].mean()
 
+#Observamos si existe alguna correlacion entre las variables 'condition' y 'grade' 
+house_price_regression[['condition', 'grade']].corr()
 
 
 
