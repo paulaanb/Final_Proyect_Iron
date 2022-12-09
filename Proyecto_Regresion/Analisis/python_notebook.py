@@ -44,6 +44,10 @@ house_price_regression.sort_values(by='price', ascending=False).head(10)['id']
 #Precio promedio de las casas
 house_price_regression['price'].mean()
 
+#Utilizamos la funcion 'groupby' 
+#Agrupamos los datos por la columna 'bedrooms' y calculamos el promedio de la columna 'price'
+house_price_regression.groupby('bedrooms')['price'].mean()
+
 
 
 
