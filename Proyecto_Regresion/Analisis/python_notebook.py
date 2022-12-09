@@ -48,6 +48,10 @@ house_price_regression['price'].mean()
 #Agrupamos los datos por la columna 'bedrooms' y calculamos el promedio de la columna 'price'
 house_price_regression.groupby('bedrooms')['price'].mean()
 
+#Agrupamos los datos por la columna 'bedrooms' y calculamos el promedio de lacolumna 'sqft_living' 
+house_price_regression.groupby('bedrooms')['sqft_living'].mean()
+
+
 
 
 
