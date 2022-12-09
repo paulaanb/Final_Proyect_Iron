@@ -18,62 +18,62 @@ import pylab as plt
 regression=pd.read_csv("regression_data.csv", sep= ";")
 regression.head()
 
-#Eliminamos la columna 'date' ya que no la utilizaremos en el analisis
+#Eliminamos la columna 'date', puesto que no sera utilizada en el análisis posterior.
 regression.drop('date', axis=1, inplace=True)
 regression.head(10)
 
-#Mostramos la cantidad de filas 
+#Mostramos la cantidad de filas totales existentes en los datos a analizar.
 print('Cantidad de filas: ', regression.shape[0])
 
-#VALORES UNICOS
+#Empezamos a analizar los valores únicos
 
-#Columna 'bedrooms'
+#Mostramos la columna 'bedrooms' del documento
 regression['bedrooms'].unique()
 
-#Columna 'bathrooms'
+#Mostramos la columna 'bathrooms' del documento 
 regression['bathrooms'].unique()
 
-#Columna 'floors'
+#Mostramos la columna 'floors' del documento 
 regression['floors'].unique()
 
-#Columna 'condition'
+#Mostramos la columna 'condition' del documento 
 regression['condition'].unique()
 
-#Columna 'grade'
+#Mostramos la columna 'grade' del documento 
 regression['grade'].unique()
 
 #Ordenamos los datos en orden decreciente según el precio de la casa. 
 regression.sort_values(by='price', ascending=False).head(10)['id'] 
-#Mostramso los 10 ids de las casas mÁs caras
+#Mostramos los ids de las 10 casas más caras.
 
-#Precio promedio de las casas
+#Precio medio de las casas.
 regression['price'].mean()
 
-#Utilizamos la funcion 'groupby' 
-#Agrupamos los datos por la columna 'bedrooms' y calculamos el promedio de la columna 'price'
+#Utilizamos la funcion 'groupby' y agrupamos los datos segun la columna 'bedrooms'.
+#Calculamos el promedio de la columna 'price'
 regression.groupby('bedrooms')['price'].mean()
 
-#Agrupamos los datos por la columna 'bedrooms' y calculamos el promedio de lacolumna 'sqft_living' 
+#Agrupamos los datos segun la columna 'bedrooms' y calculamos el promedio de la columna 'sqft_living' 
 regression.groupby('bedrooms')['sqft_living'].mean()
 
-#Precio promedio de las casas con 'waterfront'
+#Imprimimos el precio medio de las casas con 'waterfront'
 regression[regression['waterfront']==1]['price'].mean()
 
-#Precio promedio de las casas sin 'waterfront'
+#Imprimimos el precio medio de las casas sin 'waterfront'
 regression[regression['waterfront']==0]['price'].mean()
 
 #Observamos si existe alguna correlacion entre las variables 'condition' y 'grade' 
 regression[['condition', 'grade']].corr()
 
-#Dibujamos una gráfica para poder observar si hay una correlación positiva o negativa o no hay correlacion
+#Dibujamos una gráfica para poder comprobar si hay correlación positiva, negativa o no hay correlacion alguna entre los datos.
 sns.regplot(x='condition', y='grade', data=regression)
-print("La grafica que indica el estado de correlacion es la mostrada a continuación.")
+print("La grafica mostrada a continuación indica el estado de correlacion.")
 
 print("Observamos que entre ambas variables, 'condition' y 'grade', existe una correlación positiva, por lo que a mayor condición del inmueble, mayor será su calificación. Esto tiene sentido, ya que un inmueble en buenas condiciones tendrá una mejor calificación si lo comparamos con uno en malas condiciones.")
 
-#CASAS POR CONDICIONES
+#Mostramos las casas segun sus condiciones
 
-#Cantidad de casas por condicion
+#Cantidad de casas segun sus condiciones
 regression['condition'].value_counts()
 
 #Cantidad de casas por baños
@@ -98,12 +98,12 @@ regression['price'].value_counts()
     #La calificacion tiene que ser al menos de un 5
     #El precio tiene que ser menos de 300000
 
-#Creamos una variable que contenga los datos de las casas que cumplen con las condiciones
+#Creamos una variable que contenga los datos de las casas que cumplen con las condiciones requeridas
 regression[((regression['bedrooms']==3) | (regression['bedrooms']==4)) &  (regression['bathrooms']>3) &  (regression['floors']==1) & (regression['waterfront']==0) & (regression['condition']>=3) & (regression['grade']>=5) & (regression['price']<300000)]
 
 print("No es posible recomendarle al cliente ninguna casa con las condiciones que ha solicitado, por lo tanto la lista se entrega vacia.")
 
-#Mostramos las casas que su precio es el doble de la media
+#Mostramos las casas cuyo precio es el doble que la media
 regression[regression['price']>(regression['price'].mean()*2)]
 
 #Obtenemos la diferencia entre el precio medio de las casas con 3 habitaciones y las casas con 4 habitaciones
