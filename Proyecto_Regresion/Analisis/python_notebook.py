@@ -64,8 +64,16 @@ house_price_regression[['condition', 'grade']].corr()
 #plot to visually check if there is a positive correlation or negative correlation or no correlation between both variables
 sns.regplot(x='condition', y='grade', data=house_price_regression)
 
+#Observamos en la grafica que entre ambas variables ('condition' y 'grade') existe una correlación
+# positiva, es decir, a mayor condición del inmueble, mayor será su calificación.
+# Esto es lógico, ya que un inmueble en buenas condiciones tendrá una mejor calificación que uno en malas condiciones.
 
 
+#CASAS POR CONDICIONES
 
+#Cantidad de casas por condicion
+house_price_regression['condition'].value_counts()
 
+#Cantidad de casas por baños
+house_price_regression['bathrooms'].value_counts()
 
