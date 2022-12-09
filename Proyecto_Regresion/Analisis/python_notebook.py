@@ -61,6 +61,10 @@ house_price_regression[house_price_regression['waterfront']==0]['price'].mean()
 house_price_regression[['condition', 'grade']].corr()
 
 
+#plot to visually check if there is a positive correlation or negative correlation or no correlation between both variables
+sns.regplot(x='condition', y='grade', data=house_price_regression)
+
+
 
 
 
