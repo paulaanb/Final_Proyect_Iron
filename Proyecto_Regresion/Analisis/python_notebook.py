@@ -80,3 +80,9 @@ house_price_regression['bathrooms'].value_counts()
 #Cantidad de casas por pisos
 house_price_regression['floors'].value_counts()
 
+#Cantidad de casas por calificacion
+house_price_regression['grade'].value_counts()
+
+
+#Cantidad de casas por precio
+house_price_regression['price'].value_counts()
