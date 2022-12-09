@@ -41,7 +41,10 @@ house_price_regression['grade'].unique()
 house_price_regression.sort_values(by='price', ascending=False).head(10)['id']
  #Mostramos los 10 ids de las casas mas caras
 
- 
+#Precio promedio de las casas
+house_price_regression['price'].mean()
+
+
 
 
 
