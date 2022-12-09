@@ -35,3 +35,15 @@ house_price_regression['condition'].unique()
 
 #Columna 'grade'
 house_price_regression['grade'].unique()
+
+
+#Ordenamos los datos en orden decreciente por el precio de la casa. 
+house_price_regression.sort_values(by='price', ascending=False).head(10)['id']
+ #Mostramos los 10 ids de las casas mas caras
+
+ 
+
+
+
+
+
