@@ -16,3 +16,8 @@ house_price_regression.head(10)
 
 #Mostramos la cantidad de filas 
 print('Cantidad de filas: ', house_price_regression.shape[0]) 
+
+#VALORES UNICOS
+
+#Columna 'bedrooms'
+house_price_regression['bedrooms'].unique()
