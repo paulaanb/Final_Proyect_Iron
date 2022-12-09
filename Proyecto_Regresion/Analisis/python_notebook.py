@@ -25,3 +25,7 @@ house_price_regression['bedrooms'].unique()
 
 #Columna 'bathrooms'
 house_price_regression['bathrooms'].unique()
+
+#Columna 'floors'
+house_price_regression['floors'].unique()
+
