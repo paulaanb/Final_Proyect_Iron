@@ -3,5 +3,5 @@
 A continuación hemos analizado un dataset de casas haciendo uso de lo aprendido en el curso IronHack. 
 En este caso nos hemos centrado en el estudio de regresion.
 # Integrantes del proyecto
-  @anagarciasaiz Ana Garcia Saez
+  @anagarciasaiz Ana Garcia Saiz
   @paulaanb Paula Naranjo Borrallo
