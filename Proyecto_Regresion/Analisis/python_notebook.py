@@ -15,7 +15,7 @@ warnings.filterwarnings('ignore')
 import statsmodels.api as sm
 import pylab as plt
 
-regression=pd.read_csv("regression_data.csv", sep= ";")
+regression=pd.read_csv("regression_data.csv",sep= ";")
 regression.head()
 
 #Eliminamos la columna 'date', puesto que no sera utilizada en el análisis posterior.
@@ -117,3 +117,96 @@ regression[regression['yr_renovated']>0]
 
 #Imprimimos los detalles de la 11º casa mas cara del dataset 
 regression.sort_values(by='price', ascending=False).head(11).iloc[10]
+
+print("Vamos a crear el modelo de regresion para segun unas carecteristicas imprimir el precio.")
+
+plt.figure(figsize=(15, 10))
+
+sns.set(style='white')
+
+mask=np.triu(np.ones_like(regression.corr(), dtype=bool))
+
+cmap=sns.diverging_palette(0, 10, as_cmap=True)
+
+
+sns.heatmap(regression.corr(),
+           mask=mask,
+          cmap=cmap,
+          center=0,
+          square=True,
+          annot=True,
+          linewidths=0.5,
+          cbar_kws={'shrink': 0.5});
+
+print("A simple vista podemos observar que 'condition','waterfront' y 'lat', entre otras, tiene una correlacción muy baja con nuestra variable dependiente por lo que son candidatas a ser excluidas de nuestro set de entrenamiento, pero de momento vamos a dejarlas.")
+
+print("El primer paso es separar los datos de entrenamiento de nuestro variable objetivo o variable dependiente")
+
+X = regression.drop('price', axis=1)
+
+y = regression.price
+
+X.head()
+
+print("Una vez que nos hemos decantado por estas variables ahora sí vamos a dividir nuestro set de datos en entrenamiento y test, para ello utilizamemos el método train_test_split de la libería scikit-learn")
+
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8, test_size=0.2, random_state=22)
+
+X_train.shape, X_test.shape, y_train.shape, y_test.shape
+
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+sc = StandardScaler().fit(X_train)
+mm = MinMaxScaler().fit(X_train)
+
+print("Ahora con ellos podemos transformar nuestros set de datos y probarlos por separado para ver con cual de los dos funciona mejor, es importante realizar el ajuste del scaler únicamente con los datos train, con la intención de dar a nuestro modelo la menor información sobre los datos de test para que nuestro experimento sea lo más veraz posible")
+
+X_train_sc = sc.transform(X_train)
+X_test_sc = sc.transform(X_test)
+X_train_mm = mm.transform(X_train)
+X_test_mm = mm.transform(X_test)
+
+X_train_sc.shape, X_train_mm.shape
+
+X_train_sc.shape
+
+X_train_sc
+
+X_train_mm
+
+print("Una vez que ya tenemos nuestros datos transfomados y escalados podemos proceder a entrenar nuestro modelo, para una primera aproximación vamos a decantarnos por el modelo más sencillo que es una regresión lineal")
+
+from sklearn.linear_model import LinearRegression
+
+ln = LinearRegression()
+ln_sc = LinearRegression()
+ln_mm = LinearRegression()
+
+ln.fit(X_train, y_train)
+ln_sc.fit(X_train_sc,y_train)
+ln_mm.fit(X_train_mm,y_train)
+
+print("Ahora comenzamos con las predicciones.")
+
+preds =ln.predict(X_test)
+preds_sc =ln_sc.predict(X_test_sc)
+preds_mm = ln_mm.predict(X_test_mm)
+
+preds[:10]
+
+preds_sc[:10]
+
+preds_mm[:10]
+
+y_test[:10]
+
+ln.score(X_train, y_train), ln_sc.score(X_train_sc, y_train), ln_mm.score(X_train_mm, y_train)
+
+ln.score(X_test, y_test), ln_sc.score(X_test_sc, y_test), ln_mm.score(X_test_mm, y_test)
+
+from sklearn.metrics import mean_squared_error as mse
+
+mse(y_train, ln.predict(X_train), squared=False)
+
+mse(y_test, preds, squared=False)
